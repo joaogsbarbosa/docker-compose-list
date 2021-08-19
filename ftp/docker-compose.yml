@@ -1,0 +1,18 @@
+version: '2'
+
+services:
+  ftpd-server:
+    container_name: ftpd-server
+    image: stilliard/pure-ftpd:hardened
+    ports:
+      - "21:21"
+      - "20:20"
+      - "30000-30009:30000-30009"
+    environment:
+      PUBLICHOST: "0.0.0.0"
+      FTP_USER_NAME: "test"
+      FTP_USER_PASS: "test"
+      FTP_USER_HOME: "/files"
+    volumes:
+      - ./files:/files
+    restart: on-failure
