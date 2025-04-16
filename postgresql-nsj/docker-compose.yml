@@ -1,0 +1,27 @@
+version: '3'
+
+services:
+  postgres:
+    image: postgres:11.22-alpine3.19
+    container_name: postgres-nsj
+    environment:
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_USER: postgres
+      POSTGRES_DB: postgres
+      POSTGRES_INITDB_ARGS: "--encoding=UTF8 --lc-collate=Portuguese_Brazil.1252 --lc-ctype=Portuguese_Brazil.1252"
+    command: >
+      postgres
+      -c max_locks_per_transaction=1024
+      -c lc_messages=Portuguese_Brazil.1252
+      -c lc_monetary=Portuguese_Brazil.1252
+      -c lc_numeric=Portuguese_Brazil.1252
+      -c lc_time=Portuguese_Brazil.1252
+      -c datestyle=iso,dmy
+    ports:
+      - "5443:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    restart: unless-stopped
+
+volumes:
+  postgres_data:
